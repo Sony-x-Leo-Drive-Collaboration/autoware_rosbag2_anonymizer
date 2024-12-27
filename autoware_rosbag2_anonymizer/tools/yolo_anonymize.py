@@ -71,7 +71,10 @@ def yolo_anonymize(config_data, json_data, device) -> None:
             )
 
             # Write blured image to rosbag
-            writer.write_image(output, msg.topic, msg.timestamp, msg.data._encoding)
+            if "Compressed" in msg.type:
+                writer.write_image(output, msg.topic, msg.timestamp)
+            else:
+                writer.write_image(output, msg.topic, msg.timestamp, msg.data._encoding)
 
             # Print detections: how many objects are detected in each class
             if config_data["debug"]["print_on_terminal"]:

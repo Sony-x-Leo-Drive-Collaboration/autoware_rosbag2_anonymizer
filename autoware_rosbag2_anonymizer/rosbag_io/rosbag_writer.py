@@ -57,7 +57,7 @@ class RosbagWriter:
                 else "sensor_msgs/msg/CompressedImage"
             )
 
-        if self.write_compressed:
+        if self.write_compressed or encoding == "bgr8":
             image_msg = self.bride.cv2_to_compressed_imgmsg(image)
         else:
             image_msg = self.bride.cv2_to_imgmsg(
