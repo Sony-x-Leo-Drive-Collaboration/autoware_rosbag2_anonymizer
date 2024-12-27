@@ -59,6 +59,13 @@ sudo apt install ros-humble-rosbag2-storage-mcap
 
 #### Install `autoware_rosbag2_anonymizer` package
 
+We highly recommend using a virtual environment to install the tool. You can create a virtual environment with the following command:
+
+``` shell
+python3 -m venv .venv
+. .venv/bin/activate
+```
+
 Before installing the tool, you should update the pip package manager.
 
 ```bash
