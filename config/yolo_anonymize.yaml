@@ -11,6 +11,7 @@ segment_anything_2:
   model_cfg: 'configs/sam2.1/sam2.1_hiera_s.yaml'
   checkpoint_path: './sam2.1_hiera_small.pt'
 blur:
+  region: 'bbox' # 'bbox' or 'mask'
   kernel_size: 31
   sigma_x: 9
 debug:

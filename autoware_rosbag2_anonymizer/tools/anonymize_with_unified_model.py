@@ -69,12 +69,14 @@ def anonymize_with_unified_model(config_data, json_data, device) -> None:
                 detections = unified_language_model(image)
 
                 # Run SAM2
-                detections = sam2(image=image, detections=detections)
+                if config_data["blur"]["region"] == "mask":
+                    detections = sam2(image=image, detections=detections)
 
                 # Blur detections
                 output = blur_detections(
                     image,
                     detections,
+                    config_data["blur"]["region"],
                     config_data["blur"]["kernel_size"],
                     config_data["blur"]["sigma_x"],
                 )

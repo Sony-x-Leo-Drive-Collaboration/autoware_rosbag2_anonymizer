@@ -58,12 +58,14 @@ def yolo_anonymize(config_data, json_data, device) -> None:
             detections = yolo_model(image, confidence=yolo_confidence)
 
             # Run SAM
-            detections = sam2(image=image, detections=detections)
+            if config_data["blur"]["region"] == "mask":
+                detections = sam2(image=image, detections=detections)
 
             # Blur detections
             output = blur_detections(
                 image,
                 detections,
+                config_data["blur"]["region"],
                 config_data["blur"]["kernel_size"],
                 config_data["blur"]["sigma_x"],
             )

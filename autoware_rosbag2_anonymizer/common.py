@@ -96,17 +96,25 @@ def bbox_check(xyxy, class_id, detections, iou_threshold, classes, class_map) ->
     return False
 
 
-def blur_detections(img, detections, kernel_size, sigma_x):
+def blur_detections(img, detections, region, kernel_size, sigma_x):
     output_img = img.copy()
     for xyxy, mask, _, _, _, _ in detections:
         x1, y1, x2, y2 = map(int, xyxy)
         region_to_blur = img[y1:y2, x1:x2]
-        mask_cropped = mask[y1:y2, x1:x2]
-
-        blurred_region = cv2.GaussianBlur(
-            region_to_blur, (kernel_size, kernel_size), sigma_x
-        )
-        output_img[y1:y2, x1:x2][mask_cropped] = blurred_region[mask_cropped]
+        
+        if region == "mask":
+            mask_cropped = mask[y1:y2, x1:x2]
+            blurred_region = cv2.GaussianBlur(
+                region_to_blur, (kernel_size, kernel_size), sigma_x
+            )
+            output_img[y1:y2, x1:x2][mask_cropped] = blurred_region[mask_cropped]
+        elif region == "bbox":
+            blurred_region = cv2.GaussianBlur(
+                region_to_blur, (kernel_size, kernel_size), sigma_x
+            )
+            output_img[y1:y2, x1:x2] = blurred_region
+        else:
+            raise ValueError("Invalid region type to blur: use 'mask' or 'bbox'")
     return output_img
 
 
