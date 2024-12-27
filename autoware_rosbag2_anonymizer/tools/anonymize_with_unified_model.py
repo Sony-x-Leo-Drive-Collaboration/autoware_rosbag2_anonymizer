@@ -17,6 +17,7 @@ from autoware_rosbag2_anonymizer.common import (
     create_classes,
     blur_detections,
     get_file_paths,
+    ENCODINGS,
 )
 
 
@@ -59,6 +60,10 @@ def anonymize_with_unified_model(config_data, json_data, device) -> None:
                     image = cv_bridge.CvBridge().compressed_imgmsg_to_cv2(msg.data)
                 else:
                     image = cv_bridge.CvBridge().imgmsg_to_cv2(msg.data)
+                    if msg.data._encoding != "bgr8":
+                        image = cv2.cvtColor(
+                            image, ENCODINGS[msg.data._encoding]["forward"]
+                        )
 
                 # Find bounding boxes with Unified Model
                 detections = unified_language_model(image)
@@ -75,7 +80,7 @@ def anonymize_with_unified_model(config_data, json_data, device) -> None:
                 )
 
                 # Write blured image to rosbag
-                writer.write_image(output, msg.topic, msg.timestamp)
+                writer.write_image(output, msg.topic, msg.timestamp, msg.data._encoding)
 
                 # Print detections: how many objects are detected in each class
                 if config_data["debug"]["print_on_terminal"]:

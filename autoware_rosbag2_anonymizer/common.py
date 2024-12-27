@@ -8,6 +8,17 @@ import yaml
 
 import supervision as sv
 
+ENCODINGS = {
+    "rgb8": {
+        "forward": cv2.COLOR_RGB2BGR,
+        "backward": cv2.COLOR_BGR2RGB,
+    },
+    "rgba8": {
+        "forward": cv2.COLOR_RGBA2BGR,
+        "backward": cv2.COLOR_BGR2RGBA,
+    },
+}
+
 
 def get_file_paths(root_folder: str, extensions: List[str]):
     file_paths = []

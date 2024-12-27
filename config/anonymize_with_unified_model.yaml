@@ -1,7 +1,7 @@
 rosbag:
   input_bags_folder: '/path/to/input_bag_folder'
   output_bags_folder: '/path/to/output_folder'
-  output_save_compressed_image: True
+  output_save_compressed_image: False
   output_storage_id: 'mcap' # 'sqlite3' or 'mcap'
 grounding_dino:
   config_path: './GroundingDINO_SwinB.cfg.py'

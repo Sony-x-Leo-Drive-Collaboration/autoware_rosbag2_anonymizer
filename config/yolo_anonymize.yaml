@@ -1,7 +1,7 @@
 rosbag:
   input_bag_path: '/path/to/input_bag_file'
   output_bag_path: '/path/to/output_bag_file'
-  output_save_compressed_image: True
+  output_save_compressed_image: False
   output_storage_id: 'sqlite3' # 'sqlite3' or 'mcap'
 yolo:
   model: './yolo11x_anonymizer.pt'
