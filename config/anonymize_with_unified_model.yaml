@@ -13,6 +13,7 @@ segment_anything_2:
   model_cfg: 'configs/sam2.1/sam2.1_hiera_s.yaml'
   checkpoint_path: './sam2.1_hiera_small.pt'
 openclip:
+  run: False
   model_name: 'ViT-B-32'
   pretrained_model: 'laion2b_s34b_b79k'
   score_threshold: 0.7
