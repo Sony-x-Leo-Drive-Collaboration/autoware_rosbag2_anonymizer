@@ -63,9 +63,13 @@ class RosbagWriter:
             image_msg = self.bride.cv2_to_imgmsg(
                 cv2.cvtColor(image, ENCODINGS[encoding]["backward"])
             )
-            image_msg._encoding = encoding
-        self.writer.write(topic_name, serialize_message(image_msg), timestamp)
+            image_msg._encoding = encoding 
 
+        image_msg.header.stamp.sec = timestamp // 10**9 
+        image_msg.header.stamp.nanosec = timestamp % 10**9 
+
+        self.writer.write(topic_name, serialize_message(image_msg), timestamp)
+        
     def write_any(self, msg, msg_type, topic_name, timestamp):
         if topic_name not in self.type_map:
             create_topic(
